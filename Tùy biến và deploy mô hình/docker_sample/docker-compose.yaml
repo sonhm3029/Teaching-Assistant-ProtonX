@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  flask_server:
+    image: python:3.8-slim
+    container_name: flask_server
+    working_dir: /app
+    volumes:
+      - ./server:/app  # Adjust the path to your Flask server's code directory
+    ports:
+      - "8000:8000"
+    command: >
+      /bin/bash -c "pip install -r requirements.txt && python server.py"  # Adjust app.py to your Flask entry script
+
+  streamlit_client:
+    image: python:3.8-slim
+    container_name: streamlit_client
+    working_dir: /app
+    volumes:
+      - ./client:/app  # Adjust the path to your Streamlit client's code directory
+    ports:
+      - "8501:8501"
+    command: >
+      /bin/bash -c "pip install -r requirements.txt && streamlit run client.py"  # Adjust app.py to your Streamlit entry script
