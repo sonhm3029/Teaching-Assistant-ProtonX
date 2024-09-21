@@ -7,6 +7,8 @@ services:
     working_dir: /app
     volumes:
       - ./server:/app  # Adjust the path to your Flask server's code directory
+    networks:
+      - app_network
     ports:
       - "8000:8000"
     command: >
@@ -18,7 +20,15 @@ services:
     working_dir: /app
     volumes:
       - ./client:/app  # Adjust the path to your Streamlit client's code directory
+    networks:
+      - app_network
+    depends_on:
+      - flask_server
     ports:
       - "8501:8501"
     command: >
       /bin/bash -c "pip install -r requirements.txt && streamlit run client.py"  # Adjust app.py to your Streamlit entry script
+
+networks:
+  app_network:
+    driver: bridge

@@ -5,7 +5,7 @@ from PIL import Image
 st.title("Cat or Dog Classifier")
 
 # Input for Flask server URL
-server_url = st.text_input("Enter the Flask server URL", value="http://localhost:8000")
+# server_url = st.text_input("Enter the Flask server URL", value="http://localhost:8000")
 
 # File uploader for image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -19,7 +19,7 @@ if uploaded_file is not None:
     if st.button("Predict"):
         files = {"file": uploaded_file.getvalue()}
         try:
-            response = requests.post(f"{server_url}/predict", files=files)
+            response = requests.post("http://flask_server:8000/predict", files=files)
             if response.status_code == 200:
                 result = response.json()
                 st.success(f"Prediction: {result['class']}")
