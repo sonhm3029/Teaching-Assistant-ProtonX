@@ -1,0 +1,17 @@
+# Use Python 3.8-slim as the base image
+FROM python:3.8-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY ./server/requirements.txt /app/requirements.txt
+
+# Install the necessary packages
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the port Flask will run on
+EXPOSE 8000
+
+# Command to run the Flask app
+CMD ["python", "server.py"]
